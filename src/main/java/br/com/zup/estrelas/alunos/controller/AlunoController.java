@@ -30,9 +30,22 @@ public class AlunoController {
     @Autowired
     AlunoRepository repository;
     
+    
+    String htmlInStr = "<!DOCTYPE html>\n"
+            + "<html>\n"
+            + "<body>\n"
+            + "\n"
+            + "<h1>My First Heading</h1>\n"
+            + "\n"
+            + "<p>My first paragraph.</p>\n"
+            + "\n"
+            + "</body>\n"
+            + "</html>";
+    
     @PostMapping
-    public Aluno insereAluno(@RequestBody Aluno aluno) {
-        return this.repository.save(aluno);
+    public String insereAluno(@RequestBody Aluno aluno) {
+        this.repository.save(aluno);
+        return "Requisição feita com sucesso";
     }
     
     //  Aqui, a propriedade Path nos diz que iremos utilizar a 
@@ -47,5 +60,11 @@ public class AlunoController {
     public List<Aluno> buscaAlunos() {
         return (List<Aluno>) repository.findAll();
     }
+    
+    @GetMapping(path = "/html", produces = {MediaType.TEXT_HTML_VALUE})
+    public String carregaPag() {
+        return this.htmlInStr;
+    }
+   
     
 }
